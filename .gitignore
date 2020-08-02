@@ -24,3 +24,7 @@ yarn-error.log*
 
 #vscode
 /.vscode
+
+/src/All For U_files
+/src/abc.html
+/src/All For U.html
