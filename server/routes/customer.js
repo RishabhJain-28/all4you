@@ -29,9 +29,10 @@ const router = express.Router();
 
 // * Register Customer
 router.post("/signup", async (req, res) => {
+  console.log(req.body);
   try {
-    const { error } = validateCustomer(req.body);
-    if (error) return res.send(error.details[0].message);
+    // const { error } = validateCustomer(req.body);
+    // if (error) return res.send(error.details[0].message);
 
     let customer = await Customer.findOne({
       phoneNo: Number(req.body.phoneNo),
@@ -39,7 +40,7 @@ router.post("/signup", async (req, res) => {
     if (customer) return res.send("User already exists.");
 
     // validate age
-    var DOB = moment(new Date(req.body.DOB)).format("D/M/YYYY");
+    var DOB = moment(new Date(req.body.DOB));
     var age = moment().diff(DOB, "years");
     age = Number(age);
     if (age < 18)
@@ -49,32 +50,32 @@ router.post("/signup", async (req, res) => {
     await sendOtp(Number(req.body.phoneNo));
 
     // validate otp
-    const result = await validateOtp(
-      Number(req.body.phoneNo),
-      req.body.otp.trim()
-    );
+    // const result = await validateOtp(
+    //   Number(req.body.phoneNo),
+    //   req.body.otp.trim()
+    // );
 
-    if (!result) return res.send("Invalid OTP.");
+    // if (!result) return res.send("Invalid OTP.");
 
     // validate invite code
-    var inviteResult = await validateInviteCode(
-      req.body.inviteCode.trim(),
-      Number(req.body.phoneNo)
-    );
+    // var inviteResult = await validateInviteCode(
+    //   req.body.inviteCode.trim(),
+    //   Number(req.body.phoneNo)
+    // );
 
-    if (inviteResult === 0) {
-      return res.send("No invite found.");
-    } else if (inviteResult === 1) {
-      return res.send("Invitation has expired.");
-    }
+    // if (inviteResult === 0) {
+    //   return res.send("No invite found.");
+    // } else if (inviteResult === 1) {
+    //   return res.send("Invitation has expired.");
+    // }
 
     // check password and confirm password
     if (req.body.password.trim() !== req.body.confirmPassword.trim())
       return res.send("Passwords do not match.");
 
     // hash the password
-    const salt = bcrypt.genSalt(10);
-    var password = bcrypt.hash(req.body.password.trim(), salt);
+    const salt = await bcrypt.genSalt(10);
+    var password = await bcrypt.hash(req.body.password.trim(), salt);
 
     customer = await Customer.create({
       name: req.body.name.trim(),
@@ -95,6 +96,7 @@ router.post("/signup", async (req, res) => {
 
 // * Login Customer
 router.post("/login", (req, res, next) => {
+  console.log("a");
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/login",

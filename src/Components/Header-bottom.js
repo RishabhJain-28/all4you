@@ -1,17 +1,15 @@
 import React from "react";
 
-const SecondPart = () => {
+import logo from "../assets/logo.png";
+
+const HeaderBottom = () => {
   return (
     <div className="second-part" style={{ background: "#e0dede" }}>
       <div className="container">
         <div className="row">
           <div className="col-sm-2 col-md-3 col-xs-3">
             <a className="logo fl" href="https://all4you.co.in/">
-              <img
-                alt="logo"
-                className="header-logo"
-                src="./All For U_files/logo.png"
-              />
+              <img alt="logo" className="header-logo" src={logo} />
             </a>
           </div>
           <div className="col-md-5 col-sm-6 col-xs-12 ui search">
@@ -62,4 +60,4 @@ const SecondPart = () => {
   );
 };
 
-export default SecondPart;
+export default HeaderBottom;

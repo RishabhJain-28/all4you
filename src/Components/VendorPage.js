@@ -7,14 +7,20 @@ import VendorPageDeals from "./VendorPageDeals";
 const VendorPage = () => {
   return (
     <Fragment>
-      <div className="row">
-        <VendorPageCarousel />
-        <VendorPageDescription />
-      </div>
+      <div id="wrapper">
+        <div className="Container">
+          <div className="menu">
+            <div className="row">
+              <VendorPageCarousel />
+              <VendorPageDescription />
+            </div>
 
-      <div className="row" style={{ marginTop: "50px" }}>
-        <VendorPageDeals />
-        <VendorPageOrders />
+            <div className="row" style={{ marginTop: "50px" }}>
+              <VendorPageDeals />
+              <VendorPageOrders />
+            </div>
+          </div>
+        </div>
       </div>
     </Fragment>
   );

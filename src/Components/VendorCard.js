@@ -13,7 +13,7 @@ const VendorCard = () => {
         >
           <img
             src="https://picsum.photos/294/176.jpg"
-            alt="image"
+            alt="placeholder_image"
             style={{
               borderTopLeftRadius: "10px",
               borderTopRightRadius: "10px",

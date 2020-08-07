@@ -6,6 +6,10 @@ const categorySchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
+  img: {
+    type: String,
+    required: true,
+  },
   subcategories: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -15,11 +19,12 @@ const categorySchema = new mongoose.Schema({
 });
 
 function validateCategory(category) {
-  const schema = {
-    name: Joi.string(),
-  };
+  const schema = Joi.object({
+    name: Joi.string().required(),
+    img: Joi.string().required(),
+  });
 
-  return Joi.validate(category, schema);
+  return schema.validate(category);
 }
 
 const Category = mongoose.model("Category", categorySchema);

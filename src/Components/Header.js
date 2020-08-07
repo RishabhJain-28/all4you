@@ -1,26 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import HeaderTop from "./Header-top";
-import SecondPart from "./Second_part";
+import HeaderBottom from "./Header-bottom";
+import HeaderLocation from "./Header-Location";
 
 const Header = () => {
+  const [location, setLocation] = useState("ds");
+  const [showChangeLocation, setShowChangeLocation] = useState(true);
+
+  // const openChangeLocation = () => {
+  //   setShowChangeLocation(true);
+  // };
+  // const openChangeLocation = () => {
+  //   setShowChangeLocation(true);
+  // };
+
   return (
     <header>
       <div className="header">
-        <HeaderTop />
-
-        {/* <!-- second part start -->
-          <!-- <style>
-            @media only screen and (min-width: 770px) {
-              .hotel-submenu {
-                margin-top: 20px;
-              }
-
-              .arround-you-submenu {
-                margin-top: 20px;
-              }
-            }
-          </style> --> */}
-        <SecondPart />
+        {!showChangeLocation ? (
+          <>
+            <HeaderTop
+              location={location}
+              setShowChangeLocation={setShowChangeLocation}
+            />
+            <HeaderBottom />
+          </>
+        ) : (
+          <HeaderLocation setShowChangeLocation={setShowChangeLocation} />
+        )}
       </div>
     </header>
   );

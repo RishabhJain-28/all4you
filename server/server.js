@@ -1,23 +1,38 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 const session = require("express-session");
 const passport = require("passport");
-// const homepage = require("./routes/homepage");
+
+//routes
+const homepage = require("./routes/homepage");
+const customer = require("./routes/customer");
+const location = require("./routes/location");
+const category = require("./routes/category");
 
 // Passport Config
 require("./config/passportConfig")(passport);
 
+//Exception handling
+//TODO Proper exception handling,resolving and logging
+process.on("unhandledRejection", console.log);
+process.on("uncaughtException", console.log);
+
+//local DB
 mongoose
-  .connect("mongodb://localhost/vidly", {
+  .connect("mongodb://localhost/all4you", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   })
   .then(console.log("Connected to MongoDB locally..."))
   .catch((err) => console.error("Could not connect to MongoDB..."));
 
 app.use(express.json());
+app.use(express.static("public"));
+app.use(cors());
 app.use(
   session({
     secret: "isse mat dekho please",
@@ -28,7 +43,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use("/api/homepage", homepage);
+app.use("/api/homepage", homepage);
+app.use("/api/customer", customer);
+app.use("/api/location", location);
+app.use("/api/category", category);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3124;
 app.listen(port, console.log(`Listening on port ${port}...`));

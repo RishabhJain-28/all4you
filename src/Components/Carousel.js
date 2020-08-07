@@ -1,54 +1,30 @@
 import React, { useState } from "react";
 import Carousel from "react-bootstrap/Carousel";
 
-function ControlledCarousel() {
+const ControlledCarousel = ({ imgs }) => {
   const [index, setIndex] = useState(0);
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
   };
-
+  // console.log(imgs);
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect}>
-      <Carousel.Item>
-        <img
-          className="d-block w-50"
-          src="http://placecorgi.com/50/50"
-          alt="First slide"
-        />
-        <Carousel.Caption>
+    <Carousel wrap={true} activeIndex={index} onSelect={handleSelect}>
+      {imgs.map((i) => (
+        <Carousel.Item key={i}>
+          <img
+            className="d-block w-100"
+            src={`http://localhost:3124/uploads/${i}`}
+            alt={i}
+          />
+          {/* <Carousel.Caption>
           <h3>First slide label</h3>
           <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img
-          className="d-block w-50"
-          src="http://placecorgi.com/50/50"
-          alt="Second slide"
-        />
-
-        <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img
-          className="d-block w-50"
-          src="http://placecorgi.com/50/50"
-          alt="Third slide"
-        />
-
-        <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
+        </Carousel.Caption> */}
+        </Carousel.Item>
+      ))}
     </Carousel>
   );
-}
+};
 
 export default ControlledCarousel;

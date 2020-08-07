@@ -8,6 +8,7 @@ module.exports = function (passport) {
   passport.use(
     new LocalStrategy(async (loginDetails, password, done) => {
       console.log(loginDetails);
+      console.log(password);
 
       // Find a Customer
       let foundCustomer;
@@ -29,8 +30,10 @@ module.exports = function (passport) {
       // Match Password
       bcrypt.compare(password, foundCustomer.password, (err, isMatch) => {
         if (isMatch) {
+          console.log("password mathc");
           return done(null, foundCustomer);
         } else {
+          console.log("password dont  mathc");
           return done(null, false, { message: "Incorrect Credentials" });
         }
       });

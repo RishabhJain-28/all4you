@@ -5,7 +5,7 @@ import FilterSubcategoryItem from "./FilterSubcategoryItem";
 const Filters = () => {
   return (
     <div
-      className="col-12 col-md-5 col-lg-3"
+      className=""
       style={{
         backgroundColor: "white",
         paddingBottom: "15px",

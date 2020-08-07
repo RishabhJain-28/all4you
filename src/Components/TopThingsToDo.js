@@ -1,15 +1,53 @@
-import React from "react";
-import Carousel from "./Carousel";
-
+import React, { useState } from "react";
+// import Carousel from "./Carousel";
+import { Carousel } from "react-bootstrap";
+import VendorCard from "./VendorCard";
 const TopThingsToDo = () => {
+  const [index, setIndex] = useState(0);
+
+  const handleSelect = (selectedIndex, e) => {
+    setIndex(selectedIndex);
+  };
   return (
-    <div class="top-thing-offer">
-      <div class="container">
-        <h1 class="text-center mb-3" id="mainhomehead">
+    <div className="top-thing-offer">
+      <div className="container">
+        <h1
+          className="text-center mb-3"
+          id="mainhomehead"
+          style={{ color: "purple" }}
+        >
           Top Things To Do In Mumbai
         </h1>
         <br />
-        <Carousel />
+        <Carousel wrap={true} activeIndex={index} onSelect={handleSelect}>
+          <Carousel.Item>
+            <div className="row">
+              <VendorCard />
+
+              <VendorCard />
+
+              <VendorCard />
+            </div>
+          </Carousel.Item>
+          <Carousel.Item>
+            <div className="row">
+              <VendorCard />
+
+              <VendorCard />
+
+              <VendorCard />
+            </div>
+          </Carousel.Item>
+          <Carousel.Item>
+            <div className="row">
+              <VendorCard />
+
+              <VendorCard />
+
+              <VendorCard />
+            </div>
+          </Carousel.Item>
+        </Carousel>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
-// ! 2 TODOS remaining
-
+// ! 3 TODOS remaining
+//TODO add link to categoriees
 const express = require("express");
 const mongoose = require("mongoose");
 
@@ -59,14 +59,17 @@ router.post("/new", async (req, res) => {
     const { err } = validateCategory(req.body);
     if (err) return res.status(400).send(err.details[0].message);
 
-    let category = await Category.find({ name: req.body.name.trim() }).exec();
+    let category = await Category.findOne({
+      name: req.body.name.trim(),
+    }).exec();
     if (category) return res.status(400).send("Category already exists.");
 
     category = await Category.create({
       name: req.body.name.trim(),
+      img: req.body.img,
     });
 
-    res.json({category})
+    res.json({ category });
   } catch (error) {
     console.log("Error occured here \n", error);
     res.status(400).send("Something went wrong.");

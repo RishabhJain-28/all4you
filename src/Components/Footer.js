@@ -2,12 +2,12 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div class="footer">
-      <footer class="footer1">
-        <div class="f-top">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-3">
+    <div className="footer">
+      <footer className="footer1">
+        <div className="f-top">
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-3">
                 <h3>Company</h3>
                 <ul>
                   <li>
@@ -25,7 +25,7 @@ const Footer = () => {
                   </li>
                 </ul>
               </div>
-              <div class="col-sm-3">
+              <div className="col-sm-3">
                 <h3>Help</h3>
                 <ul>
                   <li>
@@ -41,12 +41,16 @@ const Footer = () => {
                   </li>
                 </ul>
               </div>
-              <div class="col-sm-2">
+              <div className="col-sm-2">
                 <h3>User</h3>
-                
+
                 <ul>
                   <li>
-                    <a href="http://all4you.co.in/backend/" target="_blank">
+                    <a
+                      href="http://all4you.co.in/backend/"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
                       Merchants Login
                     </a>
                   </li>
@@ -58,33 +62,33 @@ const Footer = () => {
                   </li>
                 </ul>
               </div>
-              <div class="col-sm-2">
+              <div className="col-sm-2">
                 <h3>Social Media</h3>
-                <div class="social">
+                <div className="social">
                   <a href="https://all4you.co.in/#">
-                    <i class="fa fa-twitter"></i>
+                    <i className="fa fa-twitter"></i>
                   </a>
                   <a href="https://all4you.co.in/#">
-                    <i class="fa fa-facebook"></i>
+                    <i className="fa fa-facebook"></i>
                   </a>
                   <a href="https://all4you.co.in/#">
-                    <i class="fa fa-google-plus"></i>
+                    <i className="fa fa-google-plus"></i>
                   </a>
                   <a href="https://all4you.co.in/#">
-                    <i class="fa fa-linkedin"></i>
+                    <i className="fa fa-linkedin"></i>
                   </a>
                   <a href="https://all4you.co.in/#">
-                    <i class="fa fa-pinterest-p"></i>
+                    <i className="fa fa-pinterest-p"></i>
                   </a>
                   <a href="https://all4you.co.in/#">
-                    <i class="fa fa-instagram"></i>
+                    <i className="fa fa-instagram"></i>
                   </a>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="container text">
+        <div className="container text">
           <h2>all for u</h2>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. In et augue
@@ -109,8 +113,8 @@ const Footer = () => {
           </p>
         </div>
 
-        <div class="container">
-          <div class="copyright">
+        <div className="container">
+          <div className="copyright">
             2017 © all for you India Private Limited. All rights reserved.
           </div>
         </div>

@@ -15,6 +15,7 @@ const VendorPageDeals = () => {
         >
           <div className="col-12 col-lg-3">
             <img
+              alt="place_holder"
               src="./card.jpg"
               className="img-fluid"
               style={{ borderRadius: "10px", width: "100%" }}
