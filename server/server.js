@@ -12,8 +12,13 @@ const customer = require("./routes/customer");
 const location = require("./routes/location");
 const category = require("./routes/category");
 
-// Passport Config
-require("./config/passportConfig")(passport);
+// * Passport Config
+// Customer
+require("./config/passportConfigCustomer")(passport);
+// Merchant
+require("./config/passportConfigMerchant")(passport);
+// Admin
+require("./config/passportConfigAdmin")(passport);
 
 //Exception handling
 //TODO Proper exception handling,resolving and logging
@@ -22,11 +27,14 @@ process.on("uncaughtException", console.log);
 
 //local DB
 mongoose
-  .connect("mongodb://localhost/all4you", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
+  .connect(
+    "mongodb+srv://aryaman:all4you@all4you.4rsvl.mongodb.net/all4you?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    }
+  )
   .then(console.log("Connected to MongoDB locally..."))
   .catch((err) => console.error("Could not connect to MongoDB..."));
 
