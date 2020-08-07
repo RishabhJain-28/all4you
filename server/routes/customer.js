@@ -27,6 +27,18 @@ const router = express.Router();
 
 // * Requests -->
 
+// * Send OTP for register
+router.post("/sendOTP", async (req, res) => {
+  try {
+    // send otp
+    const result = await sendOtp(Number(req.body.phoneNo));
+    res.send("OTP sent to " + req.body.phoneNo);
+  } catch (error) {
+    console.log("Error occured here \n", error);
+    res.send("Something went wrong.");
+  }
+});
+
 // * Register Customer
 router.post("/signup", async (req, res) => {
   try {
@@ -40,13 +52,10 @@ router.post("/signup", async (req, res) => {
 
     // validate age
     var DOB = moment(new Date(req.body.DOB)).format("D/M/YYYY");
-    var age = moment().diff(DOB, "years");
+    var age = moment().diff(moment(DOB, "D/M/YYYY"), "years");
     age = Number(age);
     if (age < 18)
       return res.send("Age must be 18 years or older.about-content");
-
-    // send otp
-    await sendOtp(Number(req.body.phoneNo));
 
     // validate otp
     const result = await validateOtp(
@@ -57,24 +66,24 @@ router.post("/signup", async (req, res) => {
     if (!result) return res.send("Invalid OTP.");
 
     // validate invite code
-    var inviteResult = await validateInviteCode(
-      req.body.inviteCode.trim(),
-      Number(req.body.phoneNo)
-    );
+    // var inviteResult = await validateInviteCode(
+    //   req.body.inviteCode.trim(),
+    //   Number(req.body.phoneNo)
+    // );
 
-    if (inviteResult === 0) {
-      return res.send("No invite found.");
-    } else if (inviteResult === 1) {
-      return res.send("Invitation has expired.");
-    }
+    // if (inviteResult === 0) {
+    //   return res.send("No invite found.");
+    // } else if (inviteResult === 1) {
+    //   return res.send("Invitation has expired.");
+    // }
 
     // check password and confirm password
     if (req.body.password.trim() !== req.body.confirmPassword.trim())
       return res.send("Passwords do not match.");
 
     // hash the password
-    const salt = bcrypt.genSalt(10);
-    var password = bcrypt.hash(req.body.password.trim(), salt);
+    const salt = await bcrypt.genSalt(10);
+    var password = await bcrypt.hash(req.body.password.trim(), salt);
 
     customer = await Customer.create({
       name: req.body.name.trim(),
@@ -95,7 +104,7 @@ router.post("/signup", async (req, res) => {
 
 // * Login Customer
 router.post("/login", (req, res, next) => {
-  passport.authenticate("local", {
+  passport.authenticate("customer", {
     successRedirect: "/",
     failureRedirect: "/login",
   })(req, res, next);

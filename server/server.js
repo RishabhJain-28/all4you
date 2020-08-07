@@ -5,9 +5,15 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 // const homepage = require("./routes/homepage");
+const customer = require("./routes/customer");
 
-// Passport Config
-require("./config/passportConfig")(passport);
+// * Passport Config
+// Customer
+require("./config/passportConfigCustomer")(passport);
+// Merchant
+require("./config/passportConfigMerchant")(passport);
+// Admin
+require("./config/passportConfigAdmin")(passport);
 
 mongoose
   .connect("mongodb://localhost/vidly", {
@@ -29,6 +35,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // app.use("/api/homepage", homepage);
+app.use("/api/customer", customer);
 
 const port = process.env.PORT || 3000;
 app.listen(port, console.log(`Listening on port ${port}...`));
