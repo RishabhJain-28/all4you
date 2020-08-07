@@ -13,11 +13,13 @@ const customerSchema = new mongoose.Schema({
   },
   phoneNo: {
     type: Number,
-    min: 10,
-    max: 1e10,
     unique: true,
   },
   password: String,
+  status: {
+    type: String,
+    enum: ["active", "inactive"],
+  },
   DOB: String,
   age: Number,
   orders: [
@@ -33,18 +35,26 @@ const customerSchema = new mongoose.Schema({
     enum: ["admin", "merchant", "outlet", "customer"],
     default: "customer",
   },
+  createdOn: String,
+  updatedOn: String,
+  signupIp: String,
+  loginIp: String,
 });
 
 function validateCustomer(customer) {
-  const schema = {
+  const schema = Joi.object({
     email: Joi.string().email().required(),
     name: Joi.string().required(),
     gender: Joi.string().required(),
     phoneNo: Joi.string().min(10).max(10).required(),
     DOB: Joi.string().required(),
-  };
+    password: Joi.string().required(),
+    confirmPassword: Joi.string().required(),
+    otp: Joi.string().min(6).max(6).required(),
+    // inviteCode: Joi.string().required(),
+  });
 
-  return Joi.validate(customer, schema);
+  return schema.validate(customer);
 }
 
 const Customer = mongoose.model("Customer", customerSchema);

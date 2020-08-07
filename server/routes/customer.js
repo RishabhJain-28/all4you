@@ -27,12 +27,23 @@ const router = express.Router();
 
 // * Requests -->
 
+// * Send OTP for register
+router.post("/sendOTP", async (req, res) => {
+  try {
+    // send otp
+    const result = await sendOtp(Number(req.body.phoneNo));
+    res.send("OTP sent to " + req.body.phoneNo);
+  } catch (error) {
+    console.log("Error occured here \n", error);
+    res.send("Something went wrong.");
+  }
+});
+
 // * Register Customer
 router.post("/signup", async (req, res) => {
-  console.log(req.body);
   try {
-    // const { error } = validateCustomer(req.body);
-    // if (error) return res.send(error.details[0].message);
+    const { error } = validateCustomer(req.body);
+    if (error) return res.send(error.details[0].message);
 
     let customer = await Customer.findOne({
       phoneNo: Number(req.body.phoneNo),
@@ -40,22 +51,19 @@ router.post("/signup", async (req, res) => {
     if (customer) return res.send("User already exists.");
 
     // validate age
-    var DOB = moment(new Date(req.body.DOB));
-    var age = moment().diff(DOB, "years");
+    var DOB = moment(new Date(req.body.DOB)).format("D/M/YYYY");
+    var age = moment().diff(moment(DOB, "D/M/YYYY"), "years");
     age = Number(age);
     if (age < 18)
       return res.send("Age must be 18 years or older.about-content");
 
-    // send otp
-    await sendOtp(Number(req.body.phoneNo));
-
     // validate otp
-    // const result = await validateOtp(
-    //   Number(req.body.phoneNo),
-    //   req.body.otp.trim()
-    // );
+    const result = await validateOtp(
+      Number(req.body.phoneNo),
+      req.body.otp.trim()
+    );
 
-    // if (!result) return res.send("Invalid OTP.");
+    if (!result) return res.send("Invalid OTP.");
 
     // validate invite code
     // var inviteResult = await validateInviteCode(
@@ -96,8 +104,7 @@ router.post("/signup", async (req, res) => {
 
 // * Login Customer
 router.post("/login", (req, res, next) => {
-  console.log("a");
-  passport.authenticate("local", {
+  passport.authenticate("customer", {
     successRedirect: "/",
     failureRedirect: "/login",
   })(req, res, next);
