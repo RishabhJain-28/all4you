@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 const { Location, validateLocation } = require("../models/location");
 
-router.get("/", async (req, res) => {
+router.get("/all", async (req, res) => {
   const data = await Location.find();
   res.json(data);
   //TODO add CHECK maybe?

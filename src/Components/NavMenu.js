@@ -9,7 +9,7 @@ const NavMenu = () => {
       } = await axios.get("http://localhost:3124/api/category/all");
       // console.log("cat", categories);
       setCategories(categories);
-      // console.log("categoryData", categoryData);
+      console.log("categoryData", categories);
     })();
     // console.log("zz");
     //TODO add link to categoriees

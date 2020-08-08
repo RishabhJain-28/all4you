@@ -25,7 +25,7 @@ require("./config/passportConfigAdmin")(passport);
 process.on("unhandledRejection", console.log);
 process.on("uncaughtException", console.log);
 
-//local DB
+//online DB
 mongoose
   .connect(
     "mongodb+srv://aryaman:all4you@all4you.4rsvl.mongodb.net/all4you?retryWrites=true&w=majority",
@@ -35,7 +35,7 @@ mongoose
       useCreateIndex: true,
     }
   )
-  .then(console.log("Connected to MongoDB locally..."))
+  .then(console.log("Connected to MongoDB online..."))
   .catch((err) => console.error("Could not connect to MongoDB..."));
 
 app.use(express.json());

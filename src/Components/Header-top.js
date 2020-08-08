@@ -2,7 +2,7 @@ import React from "react";
 import LoginModal from "./LoginModal";
 import HowItWorksModal from "./HowItWorksModal";
 
-const HeaderTop = ({ setShowChangeLocation }) => {
+const HeaderTop = ({ setShowChangeLocation, location }) => {
   return (
     <div className="top-part">
       <div className="container">
@@ -16,7 +16,7 @@ const HeaderTop = ({ setShowChangeLocation }) => {
                 <i className="fa fa-map-marker" aria-hidden="true" />
                 <span> Select Location </span>
                 <span className="city-name">
-                  Mumbai
+                  {location}
                   <i className="fa fa-caret-down" aria-hidden="true"></i>
                 </span>
 

@@ -1,15 +1,21 @@
 import React from "react";
 import logo from "../assets/logo.png";
 import { Button } from "react-bootstrap";
-const HeaderLocation = ({ setShowChangeLocation }) => {
+
+const HeaderLocation = ({
+  location,
+  locationsList,
+  setShowChangeLocation,
+  setLocation,
+}) => {
   return (
     <>
       <div
-        classNameName="city-selector"
+        className="city-selector"
         style={{ display: "block", background: "white" }}
       >
-        <div classNameName="overlay">
-          <div classNameName="search-body">
+        <div className="overlay">
+          <div className="search-body">
             <div className="search">
               <div className="container">
                 <Button
@@ -29,23 +35,27 @@ const HeaderLocation = ({ setShowChangeLocation }) => {
                 </p>
                 <div className="searchbox ui search_city">
                   <div className="search-input">
-                    <label htmlFor="location">
-                      <i
-                        className="fa fa-map-marker"
-                        aria-hidden="true"
-                        // style={{ display: "inline" }}
+                    <label htmlFor="location" style={{ width: "100%" }}>
+                      <i className="fa fa-map-marker" />
+                      <input
+                        id="location"
+                        className="form-control prompt"
+                        name=""
+                        value={location}
+                        onChange={(e) => {
+                          setLocation(e.target.value);
+                        }}
+                        placeholder="Enter your city name"
+                        type="search"
+                        list="locationList"
+                        autoComplete="off"
                       />
+                      <datalist id="locationList">
+                        {locationsList.map((loc) => (
+                          <option value={loc.location} key={loc._id} />
+                        ))}
+                      </datalist>
                     </label>
-                    <input
-                      id="location"
-                      // style={{ display: "inline" }}
-                      className="form-control prompt"
-                      name=""
-                      value=""
-                      placeholder="Enter your city name"
-                      type="search"
-                      autocomplete="off"
-                    />
                   </div>
                   <div className="results"></div>
                 </div>
@@ -64,6 +74,10 @@ const HeaderLocation = ({ setShowChangeLocation }) => {
                       padding: "10px",
                       color: "grey",
                       textDecoration: "none",
+                    }}
+                    onClick={() => {
+                      setLocation("mumbai");
+                      setShowChangeLocation(false);
                     }}
                     onMouseOver={(e) => {
                       e.target.style.color = "purple";

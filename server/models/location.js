@@ -6,11 +6,11 @@ const locationSchema = new mongoose.Schema({
 });
 
 function validateLocation(req) {
-  const schema = {
+  const schema = Joi.object({
     location: Joi.string().required(),
-  };
+  });
 
-  return Joi.validate(req, schema);
+  return schema.validate(req);
 }
 
 const Location = mongoose.model("Location", locationSchema);

@@ -15,6 +15,7 @@ function Homepage() {
     adBanner3: [],
     introBanner: [],
   });
+
   useEffect(() => {
     (async function () {
       const {

@@ -1,19 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import HeaderTop from "./Header-top";
 import HeaderBottom from "./Header-bottom";
 import HeaderLocation from "./Header-Location";
-
+import axios from "axios";
 const Header = () => {
-  const [location, setLocation] = useState("ds");
+  const [location, setLocation] = useState("");
+  const [locationsList, setLocationsList] = useState([]);
   const [showChangeLocation, setShowChangeLocation] = useState(true);
+  const saveLocation = (location) => {
+    setLocation(location);
+    localStorage.setItem("location", location);
+  };
+  useEffect(() => {
+    const l = localStorage.getItem("location") || "";
+    setLocation(l);
+    if (l) setShowChangeLocation(false);
+    else setShowChangeLocation(true);
 
-  // const openChangeLocation = () => {
-  //   setShowChangeLocation(true);
-  // };
-  // const openChangeLocation = () => {
-  //   setShowChangeLocation(true);
-  // };
-
+    (async function () {
+      const { data } = await axios.get(
+        "http://localhost:3124/api/location/all"
+      );
+      console.log(data);
+      setLocationsList(data);
+    })();
+  }, []);
   return (
     <header>
       <div className="header">
@@ -26,7 +37,12 @@ const Header = () => {
             <HeaderBottom />
           </>
         ) : (
-          <HeaderLocation setShowChangeLocation={setShowChangeLocation} />
+          <HeaderLocation
+            locationsList={locationsList}
+            location={location}
+            setLocation={saveLocation}
+            setShowChangeLocation={setShowChangeLocation}
+          />
         )}
       </div>
     </header>
