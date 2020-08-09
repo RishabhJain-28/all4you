@@ -9,6 +9,7 @@ const passport = require("passport");
 //routes
 const homepage = require("./routes/homepage");
 const customer = require("./routes/customer");
+const merchant = require("./routes/merchant");
 const location = require("./routes/location");
 const category = require("./routes/category");
 const deals = require("./routes/deals");
@@ -54,6 +55,7 @@ app.use(passport.session());
 
 app.use("/api/homepage", homepage);
 app.use("/api/customer", customer);
+app.use("/api/merchant", merchant);
 app.use("/api/location", location);
 app.use("/api/category", category);
 app.use("/api/deals", deals);
