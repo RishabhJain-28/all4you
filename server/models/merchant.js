@@ -65,6 +65,7 @@ const merchantSchema = new mongoose.Schema({
     },
   ],
   createdOn: String,
+  createdOrg: Date,
   updatedOn: String,
   role: {
     type: String,
@@ -80,30 +81,40 @@ function validateMerchant(merchant) {
     password: Joi.string().required(),
     confirmPassword: Joi.string().required(),
     status: Joi.string().required(),
-    businessInfo: Joi.object().keys({
-      businessType: Joi.string().required(),
-      title: Joi.string().required(),
-      logo: Joi.string(),
-      description: Joi.string(),
-    }),
-    contactInfo: Joi.object().keys({
-      firstName: Joi.string().max(150).required(),
-      lastName: Joi.string().max(150).required(),
-      altMobile: Joi.string().min(10).max(10),
-      landline: Joi.string(),
-      communicationEmail: Joi.string().email(),
-      about: Joi.string(),
-    }),
-    locationInfo: Joi.object().keys({
-      state: Joi.string().required(),
-      city: Joi.string().required(),
-      area: Joi.string().required(),
-      addrLine1: Joi.string().required(),
-      addrLine2: Joi.string().required(),
-      landmark: Joi.string().required(),
-      zipcode: Joi.number().required(),
+    businessInfo: Joi.object()
+      .keys({
+        businessType: Joi.string().required(),
+        title: Joi.string().required(),
+        logo: Joi.string(),
+        description: Joi.string(),
+      })
+      .required(),
+    contactInfo: Joi.object()
+      .keys({
+        firstName: Joi.string().max(150).required(),
+        lastName: Joi.string().max(150).required(),
+        altMobile: Joi.string().min(10).max(10),
+        landline: Joi.string(),
+        communicationEmail: Joi.string().email().required(),
+        about: Joi.string(),
+      })
+      .required(),
+    locationInfo: Joi.when("businessInfo.businessType", {
+      is: "single",
+      then: Joi.object()
+        .keys({
+          state: Joi.string().required(),
+          city: Joi.string().required(),
+          area: Joi.string().required(),
+          addrLine1: Joi.string().required(),
+          addrLine2: Joi.string().required(),
+          landmark: Joi.string().required(),
+          zipcode: Joi.number().required(),
+        })
+        .required(),
     }),
     images: Joi.array(),
+    categories: Joi.array(),
   });
 
   return schema.validate(merchant);
