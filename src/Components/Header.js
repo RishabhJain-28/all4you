@@ -21,7 +21,7 @@ const Header = () => {
       const { data } = await axios.get(
         "http://localhost:3124/api/location/all"
       );
-      console.log(data);
+
       setLocationsList(data);
     })();
   }, []);

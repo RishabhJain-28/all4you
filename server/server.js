@@ -11,6 +11,7 @@ const homepage = require("./routes/homepage");
 const customer = require("./routes/customer");
 const location = require("./routes/location");
 const category = require("./routes/category");
+const deals = require("./routes/deals");
 
 // * Passport Config
 // Customer
@@ -55,6 +56,7 @@ app.use("/api/homepage", homepage);
 app.use("/api/customer", customer);
 app.use("/api/location", location);
 app.use("/api/category", category);
+app.use("/api/deals", deals);
 
 const port = process.env.PORT || 3124;
 app.listen(port, console.log(`Listening on port ${port}...`));

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Filters from "./Filters";
-
+import { withRouter } from "react-router-dom";
 import VendorCard from "./VendorCard";
 import BannerCarousel from "./BannerCarousel";
 
-const VendorPage = () => {
-  const [homepageData, setHomepageData] = useState({
+const DealsPage = ({ match }) => {
+  const [deals, setDeals] = useState([]);
+  const [bannerImgs, setBannerImgs] = useState({
     adBanner1: [],
     adBanner2: [],
     adBanner3: [],
@@ -17,7 +18,11 @@ const VendorPage = () => {
       const {
         data: { imgsData },
       } = await axios.get("http://localhost:3124/api/homepage");
-      console.log("allImgs", imgsData);
+      const { data: deals } = await axios.get(
+        `http://localhost:3124/api/deals/category/${match.params.id}`
+      );
+
+      setDeals(deals);
       const data = {
         adBanner1: [],
         adBanner2: [],
@@ -27,7 +32,7 @@ const VendorPage = () => {
       imgsData.forEach((item) => {
         data[item.banner].push(item.name);
       });
-      setHomepageData(data);
+      setBannerImgs(data);
     })();
   }, []);
 
@@ -36,7 +41,7 @@ const VendorPage = () => {
       <div id="wrapper">
         <div className="container">
           <div className="menu">
-            <div className="row">
+            <div className="row" style={{ marginTop: "15px" }}>
               <div className="col-sm-4 ">
                 {/* <div className="left-side"> */}
                 <Filters />
@@ -44,16 +49,18 @@ const VendorPage = () => {
               </div>
               <div className="col-sm-8 ">
                 <div className="row">
-                  <VendorCard />
-                  <VendorCard />
-                  <VendorCard />
+                  {deals.map((deal) => (
+                    <VendorCard key={deal._id} deal={deal} />
+                  ))}
+                  {/* <VendorCard />
+                  <VendorCard /> */}
                 </div>
               </div>
             </div>
             {/* <div className="content"> */}
             {/* <div className="row" style={{ marginTop: "50px" }}> */}
             <div className="col-12">
-              <BannerCarousel imgs={homepageData.adBanner1} />
+              <BannerCarousel imgs={bannerImgs.adBanner1} />
             </div>
             {/* </div> */}
             {/* </div> */}
@@ -64,4 +71,4 @@ const VendorPage = () => {
   );
 };
 
-export default VendorPage;
+export default withRouter(DealsPage);

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 const NavMenu = () => {
   const [categories, setCategories] = useState([]);
@@ -10,6 +11,7 @@ const NavMenu = () => {
       // console.log("cat", categories);
       setCategories(categories);
       console.log("categoryData", categories);
+      console.log(Date.now());
     })();
     // console.log("zz");
     //TODO add link to categoriees
@@ -20,7 +22,7 @@ const NavMenu = () => {
         <ul className="menu-list text-center">
           {categories.map((category) => (
             <li key={category._id}>
-              <a href={category.name}>
+              <Link to={`/deals/${category._id}`}>
                 <div className="menu-item">
                   <div className="icon-img">
                     <img
@@ -31,7 +33,7 @@ const NavMenu = () => {
                   </div>
                   <p className="heading">{category.name}</p>
                 </div>
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
