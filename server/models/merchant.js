@@ -7,7 +7,10 @@ const merchantSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
-  phoneNo: Number,
+  phoneNo: {
+    type: Number,
+    unique: true,
+  },
   password: String,
   status: {
     type: String,
@@ -80,7 +83,7 @@ function validateMerchant(merchant) {
     phoneNo: Joi.string().max(10).min(10).required(),
     password: Joi.string().required(),
     confirmPassword: Joi.string().required(),
-    status: Joi.string().required(),
+    status: Joi.string().valid(["active", "inactive"]).required(),
     businessInfo: Joi.object()
       .keys({
         businessType: Joi.string().required(),

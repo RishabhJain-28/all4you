@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { Deal, validateDeal } = require("../models/deals");
+const { Deal, validateDeal } = require("../models/Deals");
 
 router.get("/all", async (req, res) => {
   const deals = await Deal.find();

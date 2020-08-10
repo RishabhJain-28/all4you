@@ -7,13 +7,17 @@ const adminSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
-  phoneNo: Number,
+  phoneNo: {
+    type: Number,
+    unique: true,
+  },
   password: String,
   status: {
     type: String,
     enum: ["active", "inactive"],
   },
   createdOn: String,
+  createdOrg: Date,
   updatedOn: String,
   role: {
     type: String,
@@ -21,6 +25,18 @@ const adminSchema = new mongoose.Schema({
   },
 });
 
+function validateAdmin(admin) {
+  const schema = Joi.object({
+    name: Joi.string().max(150).required(),
+    email: Joi.string().email().required(),
+    phoneNo: Joi.string().max(10).min(10).required(),
+    password: Joi.string().required(),
+    confirmPassword: Joi.string().required(),
+    status: Joi.string().valid(["active", "inactive"]).required(),
+  });
+}
+
 const Admin = mongoose.model("Admin", adminSchema);
 
 exports.Admin = Admin;
+exports.validateAdmin = validateAdmin;

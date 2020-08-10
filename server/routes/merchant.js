@@ -83,12 +83,12 @@ router.post("/new", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     var password = await bcrypt.hash(req.body.password.trim(), salt);
 
-    var reqBody = _.omit(req.body, ["password", "confirmPassword"]);
+    var reqBody = _.omit(req.body, ["password", "confirmPassword", "phoneNo"]);
 
     var newMerchant = {
       ...reqBody,
+      phoneNo: Number(req.body.phoneNo),
       password: password,
-      status: "active",
       createdOn: moment().format("D/M/YYYY, h:m A"),
       createdOrg: new Date(),
       role: "merchant",
@@ -138,15 +138,19 @@ router.put("/edit/:id", async (req, res) => {
       }),
       categories: Joi.array().required(),
       images: Joi.array(),
-      status: Joi.string().required(),
+      status: Joi.string().valid(["active", "inactive"]).required(),
     });
 
     const { error } = verificationSchema.validate(req.body);
     if (error) return res.send(error.details[0].message);
 
-    var merchant = await Merchant.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    }).exec();
+    var merchant = await Merchant.findByIdAndUpdate(
+      req.params.id,
+      { ...req.body, upadatedOn: moment().format("D/M/YYYY, h:m A") },
+      {
+        new: true,
+      }
+    ).exec();
     if (!merchant) return res.send("User does not exist.");
 
     res.send(merchant);
@@ -160,11 +164,19 @@ router.put("/edit/:id", async (req, res) => {
 // * Done
 router.put("/change-status/:id", async (req, res) => {
   try {
+    const verificationSchema = Joi.object({
+      status: Joi.string().valid(["active", "inactive"]).required(),
+    });
+
+    const { error } = verificationSchema.validate(req.body);
+    if (error) return res.send(error.details[0].message);
+
     var merchant = await Merchant.findById(req.params.id).exec();
 
     if (!merchant) return res.send("User does not exist.");
 
     merchant.status = req.body.status.trim().toLowerCase();
+    merchant.upadatedOn = moment().format("D/M/YYYY, h:m A");
 
     merchant = await merchant.save();
 
@@ -195,8 +207,8 @@ router.get("/profile", async (req, res) => {
 router.put("/profile", async (req, res) => {
   try {
     const verificationSchema = Joi.object({
-      newName: Joi.string().max(150),
-      newEmail: Joi.string().email(),
+      name: Joi.string().max(150).required(),
+      email: Joi.string().email().required(),
     });
 
     const { error } = verificationSchema.validate(req.body);
@@ -208,6 +220,7 @@ router.put("/profile", async (req, res) => {
 
     merchant.email = req.body.newEmail.trim();
     merchant.name = req.body.newName.trim();
+    merchant.upadatedOn = moment().format("D/M/YYYY, h:m A");
 
     merchant = await merchant.save();
 
@@ -222,12 +235,25 @@ router.put("/profile", async (req, res) => {
 // * Done
 router.put("/change-password", async (req, res) => {
   try {
+    const verificationSchema = Joi.object({
+      oldPassword: Joi.string().required(),
+      password: Joi.string().required(),
+      confirmPassword: Joi.string().required(),
+    });
+
+    const { error } = verificationSchema.validate(req.body);
+    if (error) return res.send(error.details[0].message);
+
     var merchant = await Merchant.findById(req.user._id).exec();
 
     if (!merchant) return res.send("User does not exists.");
 
-    if (merchant.password !== req.body.oldPassword.trim())
-      return res.send("Previous password is incorrect.");
+    var result = await bcrypt.compare(
+      req.body.oldPassword.trim(),
+      merchant.password
+    );
+
+    if (!result) return res.send("Old password is incorrect.");
 
     if (req.body.password.trim() !== req.body.confirmPassword.trim())
       return res.send("Passwords do not match.");
@@ -236,6 +262,8 @@ router.put("/change-password", async (req, res) => {
     var password = await bcrypt.hash(req.body.password.trim(), salt);
 
     merchant.password = password;
+    merchant.upadatedOn = moment().format("D/M/YYYY, h:m A");
+    
     merchant = await merchant.save();
 
     res.send(merchant);
