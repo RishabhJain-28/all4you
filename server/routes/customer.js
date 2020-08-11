@@ -93,6 +93,8 @@ router.post("/signup", async (req, res) => {
       gender: req.body.gender.trim().toLowerCase(),
       DOB: DOB,
       age: age,
+      createdOn: moment().format("D/M/YYYY, h:m A"),
+      createdOrg: new Date(),
     });
 
     res.json({ customer, message: "New Customer created" });
