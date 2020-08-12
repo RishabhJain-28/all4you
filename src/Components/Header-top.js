@@ -1,5 +1,6 @@
 import React from "react";
 import LoginModal from "./LoginModal";
+import UserHeaderMenu from "./UserHeaderMenu";
 import HowItWorksModal from "./HowItWorksModal";
 
 const HeaderTop = ({ setShowChangeLocation, location }) => {
@@ -46,10 +47,12 @@ const HeaderTop = ({ setShowChangeLocation, location }) => {
           </li>
 
           <li>
-            <a className="" href="#">
-              <LoginModal />
-              {/* signup */}
-            </a>
+            {/* <a className="" href="#"> */}
+            {/* <LoginModal /> */}
+
+            <UserHeaderMenu />
+            {/* signup */}
+            {/* </a> */}
           </li>
         </ul>
       </div>

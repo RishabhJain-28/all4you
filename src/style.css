@@ -50,7 +50,6 @@ a img {
   outline: none !important;
 }
 
-a,
 button,
 input[type="submit"] {
   -webkit-transition: all 0.3s ease-in-out;
@@ -189,9 +188,10 @@ iframe {
   padding: 0;
   position: relative;
   display: block;
-  color: #fff !important;
+  color: #fff;
   line-height: 40px;
 }
+
 .city-select-div {
   padding: 0;
   position: relative;
@@ -252,7 +252,9 @@ iframe {
   top: 13px;
   height: 15px;
 }
-
+.dropdown-link.active:hover {
+  color: purple !important;
+}
 .header .top-part ul.top-right li:first-child:after {
   border: 0px;
 }
@@ -261,8 +263,16 @@ iframe {
   line-height: 24px;
   padding: 8px 15px;
   position: relative;
+  text-decoration: none;
 }
-
+.header-account {
+  line-height: 24px;
+  padding: 8px 15px;
+  position: relative;
+  display: block;
+  color: #fff;
+  cursor: pointer;
+}
 .header .top-part ul.top-right li a .fa {
   position: absolute;
   top: 12px;
@@ -3233,7 +3243,7 @@ iframe {
 
 .order-list {
   margin: 0 auto;
-  padding-bottom: 30px;
+  padding-bottom: 0px;
 }
 
 .order-list ul.order-menu {
@@ -3253,7 +3263,7 @@ iframe {
   line-height: 20px;
 }
 
-.order-list ul.order-menu li:hover a,
+.order-list ul.order-menu a:hover,
 .order-list ul.order-menu li a.active {
   color: purple;
   border-bottom: 2px solid purple;

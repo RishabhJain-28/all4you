@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
+//! in create new merchant -- validate merchant not working with
 // * NPM Packages
 const passport = require("passport");
 const bcrypt = require("bcryptjs");
@@ -44,7 +44,9 @@ router.get("/:category_id", async (req, res) => {
   try {
     const merchants = await Merchant.find({
       categories: req.params.category_id,
-    }).exec();
+    })
+      .select(["_id", "businessName", "locationInfo", "images"])
+      .exec();
 
     if (!merchants) return res.send("No vendors exists for this category.");
 
@@ -74,8 +76,8 @@ router.get("/view/:id", async (req, res) => {
 // * Done
 router.post("/new", async (req, res) => {
   try {
-    const { error } = validateMerchant(req.body);
-    if (error) return res.send(error.details[0].message);
+    // const { error } = validateMerchant(req.body);
+    // if (error) return res.send(error.details[0].message);
 
     if (req.body.password.trim() !== req.body.confirmPassword.trim())
       return res.send("Passwords do not match.");
@@ -263,7 +265,7 @@ router.put("/change-password", async (req, res) => {
 
     merchant.password = password;
     merchant.upadatedOn = moment().format("D/M/YYYY, h:m A");
-    
+
     merchant = await merchant.save();
 
     res.send(merchant);

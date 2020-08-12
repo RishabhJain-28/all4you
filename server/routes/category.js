@@ -107,7 +107,20 @@ router.put("/sub/add/:id", async (req, res) => {
     res.status(400).send("Something went wrong.");
   }
 });
-
+// router.put("/sub/add/:id", async (req, res) => {
+//   try {
+//     if (!req.body.subcategoryId)
+//       return res.status(400).send("NO subcategory id provided in req.body");
+//     let category = await Category.findById(req.params.id).exec();
+//     if (!category) return res.status(400).send("No category found");
+//     category.subcategories.push(req.body.subcategoryID);
+//     await category.save();
+//     res.send(category);
+//   } catch (error) {
+//     console.log("Error occured here \n", error);
+//     res.status(400).send("Something went wrong.");
+//   }
+// });
 // * Remove a subcategory
 // * Done
 router.put("/sub/remove/:id", async (req, res) => {

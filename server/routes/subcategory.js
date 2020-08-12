@@ -56,7 +56,9 @@ router.post("/new", async (req, res) => {
       name: req.body.name.trim(),
       parentCategory: req.body.parentId,
     }).exec();
-    if (subcategory) return res.status(400).send("subcategory already exists.");
+    console.log(subcategory);
+    if (subcategory.length)
+      return res.status(400).send("subcategory already exists.");
 
     subcategory = await Subcategory.create({
       name: req.body.name.trim(),

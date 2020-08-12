@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-const VendorPageDeals = () => {
+const VendorPageDeal = ({ deal, qty, addToCart, removeFromCart }) => {
   return (
     <Fragment>
       <div className="col-12 col-lg-7">
@@ -15,38 +15,46 @@ const VendorPageDeals = () => {
         >
           <div className="col-12 col-lg-3">
             <img
-              alt="place_holder"
-              src="./card.jpg"
+              alt={deal.name}
+              src={`http://localhost:3124/deals/${deal.img}`}
               className="img-fluid"
               style={{ borderRadius: "10px", width: "100%" }}
             />
           </div>
           <div className="col-12 col-lg-9">
             <h5 className="text-muted">
-              <strong>Deal Name</strong>
+              <strong>{deal.name}</strong>
+              <p style={{ marginBottom: "10px" }}>{deal.description}</p>
             </h5>
             <div className="row">
               <div className="col-12 col-lg-9">
                 <p style={{ marginBottom: "10px" }}>Free Cancellation</p>
                 <small>
-                  <strong>Valid For :</strong> all |<strong>Valid On :</strong>{" "}
-                  all days |<strong>Timings :</strong> all days
+                  <strong>Valid For :</strong> all |
+                  <strong>Valid from :</strong> {deal.valide.from}
+                  <strong>Valid to :</strong> {deal.valide.to}
+                  <strong>Timings :</strong> all days
                 </small>
               </div>
               <div className="col-12 col-lg-3">
                 <div className="row">
                   <div className="col-6 col-lg-12">
                     <small>
-                      <del>Rs. 100</del>
+                      Price:
+                      <del>{deal.price}</del>
                     </small>
                     <p>
-                      <strong>Rs. 20</strong>
+                      <strong>
+                        After discount:{" "}
+                        {deal.price - (deal.price * deal.discountPercent) / 100}
+                      </strong>
                     </p>
                   </div>
                   <div className="col-6 col-lg-12">
                     <div className="d-flex justify-content-end">
                       <div className="p-2">
                         <button
+                          onClick={() => removeFromCart(deal._id)}
                           className="btn btn-sm btn-primary"
                           style={{
                             backgroundColor: "purple",
@@ -60,10 +68,18 @@ const VendorPageDeals = () => {
                         className="p-2"
                         style={{ paddingTop: "10px !important" }}
                       >
-                        0
+                        {qty}
                       </div>
                       <div className="p-2">
                         <button
+                          onClick={() =>
+                            addToCart(
+                              deal._id,
+                              deal.name,
+                              deal.price -
+                                (deal.price * deal.discountPercent) / 100
+                            )
+                          }
                           className="btn btn-sm btn-primary"
                           style={{
                             backgroundColor: "purple",
@@ -96,4 +112,4 @@ const VendorPageDeals = () => {
   );
 };
 
-export default VendorPageDeals;
+export default VendorPageDeal;

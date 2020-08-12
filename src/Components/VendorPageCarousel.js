@@ -1,63 +1,32 @@
-import React, { Fragment } from "react";
+import React, { useState } from "react";
+import { Carousel } from "react-bootstrap";
+const VendorPageCarousel = ({ images }) => {
+  const [index, setIndex] = useState(0);
 
-const VendorPageCarousel = () => {
+  const handleSelect = (selectedIndex, e) => {
+    setIndex(selectedIndex);
+  };
+
   return (
-    <Fragment>
+    <>
       <div className="col-12 col-lg-7">
-        <div id="vendorImgs" className="carousel slide" data-ride="carousel">
-          <div className="carousel-inner">
-            <div className="carousel-item active">
-              <img
-                src="./carousel.jpg"
-                alt="First slide"
-                className="img-fluid"
-                style={{ borderRadius: "10px", width: "100%" }}
-              />
-            </div>
-            <div className="carousel-item">
-              <img
-                src="./carousel.jpg"
-                alt="Second slide"
-                className="img-fluid"
-                style={{ borderRadius: "10px", width: "100%" }}
-              />
-            </div>
-            <div className="carousel-item">
-              <img
-                src="./carousel.jpg"
-                alt="Third slide"
-                className="img-fluid"
-                style={{ borderRadius: "10px", width: "100%" }}
-              />
-            </div>
-          </div>
-          <a
-            className="carousel-control-prev"
-            href="#vendorImgs"
-            role="button"
-            data-slide="prev"
-          >
-            <span
-              className="carousel-control-prev-icon"
-              aria-hidden="true"
-            ></span>
-            <span className="sr-only">Previous</span>
-          </a>
-          <a
-            className="carousel-control-next"
-            href="#vendorImgs"
-            role="button"
-            data-slide="next"
-          >
-            <span
-              className="carousel-control-next-icon"
-              aria-hidden="true"
-            ></span>
-            <span className="sr-only">Next</span>
-          </a>
+        <div id="vendorImgs">
+          <Carousel wrap={true} activeIndex={index} onSelect={handleSelect}>
+            {images &&
+              images.map((i) => (
+                <Carousel.Item key={i}>
+                  <img
+                    src={`http://localhost:3124/merchants/${i}`}
+                    alt="i"
+                    className="img-fluid"
+                    style={{ borderRadius: "10px", width: "100%" }}
+                  />
+                </Carousel.Item>
+              ))}
+          </Carousel>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 

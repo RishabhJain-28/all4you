@@ -22,7 +22,7 @@ const NavMenu = () => {
         <ul className="menu-list text-center">
           {categories.map((category) => (
             <li key={category._id}>
-              <Link to={`/deals/${category._id}`}>
+              <Link to={`/merchants/${category._id}`}>
                 <div className="menu-item">
                   <div className="icon-img">
                     <img
