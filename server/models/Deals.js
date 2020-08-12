@@ -8,9 +8,13 @@ const dealSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  outlet: {
+  merchant: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Outlet",
+    ref: "merchant",
+  },
+  isActive: {
+    type: Boolean,
+    required: true,
   },
   price: {
     type: Number,
@@ -35,6 +39,7 @@ const dealSchema = new mongoose.Schema({
     ref: "Subcategory",
   },
   valide: {
+    //! fix this stupid typo, on frontend as well//right now data on backend has same prop name
     from: {
       type: String,
       required: true,
@@ -49,12 +54,13 @@ const dealSchema = new mongoose.Schema({
   },
   createdOn: String,
 });
+
 function validateDeal(deal) {
   const schema = Joi.object({
     name: Joi.string(),
     description: Joi.string(),
     img: Joi.string().required(),
-    // outlet: Joi.objectId().required(),
+    merchant: Joi.objectId().required(),
     price: Joi.number().required(),
     commision: Joi.number().required(),
     discountPercent: Joi.number(),
@@ -62,10 +68,11 @@ function validateDeal(deal) {
     category: Joi.objectId().required(),
     // Subcategory: Joi.objectId().required(),
     valide: Joi.object({
+      //! fix this stupid typo, on frontend as well//right now data on backend has same prop name
       from: Joi.string().required(),
       to: Joi.string().required(),
     }),
-    createdOn: Joi.string(),
+    location: Joi.string(),
   });
 
   return schema.validate(deal);

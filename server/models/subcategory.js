@@ -16,11 +16,11 @@ const subcategorySchema = new mongoose.Schema({
 });
 
 function validateSubcategory(subcategory) {
-  const schema = {
+  const schema = Joi.object({
     name: Joi.string(),
-  };
+  });
 
-  return Joi.validate(subcategory, schema);
+  return schema.validate(subcategory);
 }
 
 const Subcategory = mongoose.model("Subcategory", subcategorySchema);

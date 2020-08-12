@@ -106,7 +106,7 @@ router.post("/signup", async (req, res) => {
 router.post("/login", (req, res, next) => {
   passport.authenticate("customer", {
     successRedirect: "/",
-    failureRedirect: "/login",
+    failureRedirect: "/api/login",
   })(req, res, next);
 });
 
