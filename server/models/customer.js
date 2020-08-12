@@ -36,6 +36,7 @@ const customerSchema = new mongoose.Schema({
     default: "customer",
   },
   createdOn: String,
+  createdOrg: Date,
   updatedOn: String,
   signupIp: String,
   loginIp: String,
