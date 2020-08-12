@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 
-const VendorPageDescription = () => {
+const VendorPageDescription = ({ vendor }) => {
+  if (!vendor._id) return null;
   return (
     <Fragment>
       <div className="col-12 col-lg-5">
@@ -13,10 +14,10 @@ const VendorPageDescription = () => {
         >
           <div className="card-body">
             <h4 className="card-title">
-              <strong>Vendor</strong>
+              <strong>{vendor.businessName}</strong>
             </h4>
             <p className="card-text" style={{ padding: "15px 5px 15px 5px" }}>
-              Description of Vendor
+              {vendor.businessInfo.description}
             </p>
             <button
               className="btn btn-outline-dark"

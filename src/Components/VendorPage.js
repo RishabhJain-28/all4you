@@ -1,28 +1,84 @@
-import React, { Fragment } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import VendorPageCarousel from "./VendorPageCarousel";
 import VendorPageDescription from "./VendorPageDescription";
 import VendorPageOrders from "./VendorPageOrders";
-import VendorPageDeals from "./VendorPageDeals";
+import VendorPageDeal from "./VendorPageDeal";
 
-const VendorPage = () => {
+const VendorPage = ({ match }) => {
+  const [deals, setDeals] = useState([]);
+  const [vendor, setVendor] = useState({});
+  const [cart, setCart] = useState({});
+
+  const addToCart = (id, name, price) => {
+    const qty = (cart[id] ? cart[id].qty : 0) + 1;
+    const newCart = { ...cart };
+
+    newCart[id] = {
+      name,
+      qty,
+      price,
+    };
+    setCart(newCart);
+  };
+  const removeFromCart = (id) => {
+    if (!cart[id]) return;
+    let { qty } = cart[id];
+
+    qty--;
+
+    const newCart = { ...cart };
+    newCart[id].qty = qty;
+
+    if (qty === 0) {
+      delete cart[id];
+    }
+
+    setCart(newCart);
+  };
+
+  useEffect(() => {
+    (async function () {
+      const { data: deals } = await axios.get(
+        `http://localhost:3124/api/deal/merchant/${match.params.id}`
+      );
+
+      setDeals(deals);
+      const { data: vendor } = await axios.get(
+        `http://localhost:3124/api/merchant/view/${match.params.id}`
+      );
+
+      setVendor(vendor);
+    })();
+  }, []);
+  // console.log("images -vendor", vendor.images);
   return (
-    <Fragment>
+    <>
       <div id="wrapper">
         <div className="Container">
           <div className="menu">
             <div className="row">
-              <VendorPageCarousel />
-              <VendorPageDescription />
+              <VendorPageCarousel images={vendor.images} />
+              <VendorPageDescription vendor={vendor} />
             </div>
 
             <div className="row" style={{ marginTop: "50px" }}>
-              <VendorPageDeals />
-              <VendorPageOrders />
+              {deals &&
+                deals.map((deal) => (
+                  <VendorPageDeal
+                    qty={(cart[deal._id] && cart[deal._id].qty) || 0}
+                    addToCart={addToCart}
+                    removeFromCart={removeFromCart}
+                    key={deal._id}
+                    deal={deal}
+                  />
+                ))}
+              <VendorPageOrders cart={cart} />
             </div>
           </div>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 

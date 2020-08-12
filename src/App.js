@@ -4,10 +4,11 @@ import "./style.css";
 
 import Homepage from "./Components/Homepage";
 import VendorPage from "./Components/VendorPage";
+import UserPage from "./Components/UserPage";
 import Adminpage from "./Components/Admin/Adminpage";
-import DealsPage from "./Components/DealsPage";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
+import MerchantsPage from "./Components/MerchantsPage";
 
 function App() {
   return (
@@ -18,15 +19,21 @@ function App() {
           path="/"
           render={(props) => (
             <>
-              <Header />
+              <Header {...props} />
               <Switch>
                 <Route
                   exact
-                  path="/deals/:id"
-                  component={DealsPage}
+                  path="/merchants/:id"
+                  component={MerchantsPage}
                   {...props}
                 />
-                <Route exact path="/vendor" component={VendorPage} {...props} />
+                <Route
+                  exact
+                  path="/vendor/:id"
+                  component={VendorPage}
+                  {...props}
+                />
+                <Route path="/user" component={UserPage} {...props} />
                 <Route exact path="/" component={Homepage} {...props} />
               </Switch>
               <Footer />

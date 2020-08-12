@@ -1,9 +1,19 @@
-import React, { Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import OrderDealItem from "./OrderDealItem";
 
-const VendorPageOrders = () => {
+const VendorPageOrders = ({ cart }) => {
+  const [totalAmount, setTotalAmount] = useState(0);
+  useEffect(() => {
+    const cartKeys = Object.keys(cart);
+    if (!cartKeys.length) return;
+    const amt = cartKeys.reduce(
+      (val, key) => val + cart[key].price * cart[key].qty,
+      0
+    );
+    setTotalAmount(amt);
+  }, [cart]);
   return (
-    <Fragment>
+    <>
       <div className="col-12 col-lg-5">
         <div
           className="card"
@@ -17,11 +27,13 @@ const VendorPageOrders = () => {
               <strong>Your Order</strong>
             </h5>
             <div style={{ marginTop: "15px" }}>
-              <OrderDealItem />
+              {Object.keys(cart).map((key) => {
+                return <OrderDealItem key={key} id={key} item={cart[key]} />;
+              })}
             </div>
             <div className="dropdown-divider"></div>
             <p className="card-text" style={{ padding: "5px 5px 0px 5px" }}>
-              Total Amount: Rs 100
+              Total Amount: Rs {totalAmount}
             </p>
             <button
               className="btn btn-primary"
@@ -37,7 +49,7 @@ const VendorPageOrders = () => {
           </div>
         </div>
       </div>
-    </Fragment>
+    </>
   );
 };
 

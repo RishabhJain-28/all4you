@@ -3,7 +3,7 @@ import HeaderTop from "./Header-top";
 import HeaderBottom from "./Header-bottom";
 import HeaderLocation from "./Header-Location";
 import axios from "axios";
-const Header = () => {
+const Header = (props) => {
   const [location, setLocation] = useState("");
   const [locationsList, setLocationsList] = useState([]);
   const [showChangeLocation, setShowChangeLocation] = useState(true);

@@ -8,7 +8,7 @@ const HeaderBottom = () => {
       <div className="container">
         <div className="row">
           <div className="col-sm-2 col-md-3 col-xs-3">
-            <a className="logo fl" href="https://all4you.co.in/">
+            <a className="logo fl" href="/">
               <img alt="logo" className="header-logo" src={logo} />
             </a>
           </div>
@@ -39,7 +39,7 @@ const HeaderBottom = () => {
             <div className="results"></div>
           </div>
 
-          <div className="col-md-4 col-sm-4">
+          {/* <div className="col-md-4 col-sm-4">
             <ul className="category-btn">
               <li className="category_menu arround-you active">
                 <a
@@ -52,7 +52,7 @@ const HeaderBottom = () => {
                 </a>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="clear"></div>

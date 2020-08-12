@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import Filters from "./Filters";
 import { withRouter } from "react-router-dom";
 import VendorCard from "./VendorCard";
 import BannerCarousel from "./BannerCarousel";
 
 const DealsPage = ({ match }) => {
-  const [deals, setDeals] = useState([]);
+  const [merchants, setMerchants] = useState([]);
   const [bannerImgs, setBannerImgs] = useState({
     adBanner1: [],
     adBanner2: [],
@@ -18,11 +19,11 @@ const DealsPage = ({ match }) => {
       const {
         data: { imgsData },
       } = await axios.get("http://localhost:3124/api/homepage");
-      const { data: deals } = await axios.get(
-        `http://localhost:3124/api/deals/category/${match.params.id}`
+      const { data: merchants } = await axios.get(
+        `http://localhost:3124/api/merchant/${match.params.id}`
       );
-
-      setDeals(deals);
+      console.log("a", merchants);
+      setMerchants(merchants);
       const data = {
         adBanner1: [],
         adBanner2: [],
@@ -49,8 +50,10 @@ const DealsPage = ({ match }) => {
               </div>
               <div className="col-sm-8 ">
                 <div className="row">
-                  {deals.map((deal) => (
-                    <VendorCard key={deal._id} deal={deal} />
+                  {merchants.map((merchant) => (
+                    // <Link to={`/vendor`} >
+                    <VendorCard key={merchant._id} merchant={merchant} />
+                    // </Link>
                   ))}
                   {/* <VendorCard />
                   <VendorCard /> */}
