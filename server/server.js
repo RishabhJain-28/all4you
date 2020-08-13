@@ -10,10 +10,13 @@ const passport = require("passport");
 const homepage = require("./routes/homepage");
 const customer = require("./routes/customer");
 const merchant = require("./routes/merchant");
+const admin = require("./routes/admin");
 const location = require("./routes/location");
 const category = require("./routes/category");
 const subcategory = require("./routes/subcategory");
 const deals = require("./routes/deals");
+const order = require("./routes/order");
+const enquiry = require("./routes/enquiry");
 
 // * Passport Config
 // Customer
@@ -57,10 +60,13 @@ app.use(passport.session());
 app.use("/api/homepage", homepage);
 app.use("/api/customer", customer);
 app.use("/api/merchant", merchant);
+app.use("/api/admin", admin);
 app.use("/api/location", location);
 app.use("/api/category", category);
-app.use("/api/subcategory", subcategory);
+app.use("/api/enquiry", enquiry);
+// app.use("/api/subcategory", subcategory);
 app.use("/api/deal", deals);
+app.use("/api/orders", order)
 
 const port = process.env.PORT || 3124;
 app.listen(port, console.log(`Listening on port ${port}...`));
