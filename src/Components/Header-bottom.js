@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 
 import logo from "../assets/logo.png";
 
 const HeaderBottom = () => {
+  const [searchVal, setSearchVal] = useState("");
+  const [datalist, _] = useState([
+    { val: "abc", id: 1 },
+    { val: "abccd", id: 2 },
+    { val: "abcdef", id: 3 },
+    { val: "abcdefsadsd", id: 4 },
+    { val: "afsadsd", id: 5 },
+  ]);
+
   return (
     <div className="second-part" style={{ background: "#e0dede" }}>
       <div className="container">
@@ -16,18 +25,19 @@ const HeaderBottom = () => {
             <div className="input-group fl ui icon input">
               <i className="fa fa-search" aria-hidden="true"></i>
               <input
-                type="text"
-                name=""
-                value=""
-                onChange={() => {
-                  console.log(
-                    "placeHOLDER function header seond part line 24 "
-                  );
-                }}
+                type="search"
+                list="serchListData"
+                value={searchVal}
                 className="form-control prompt"
+                onChange={(e) => setSearchVal(e.target.value)}
                 placeholder="Search Here"
-                autoComplete="off"
+                autoComplete="on"
               />
+              <datalist id="serchListData">
+                {datalist.map((item) => (
+                  <option value={item.val} key={item._id} />
+                ))}
+              </datalist>
               <span className="input-group-btn">
                 <input
                   className="btn btn-default search-btn"

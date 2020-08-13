@@ -55,14 +55,23 @@ const VendorPage = ({ match }) => {
   return (
     <>
       <div id="wrapper">
-        <div className="Container">
-          <div className="menu">
-            <div className="row">
+        <div className="container">
+          <div className="menu"></div>
+          <div className="row" style={{ marginTop: "20px" }}>
+            <div className="col-12 col-lg-8">
               <VendorPageCarousel images={vendor.images} />
+            </div>
+            <div className="col-12 col-lg-4">
               <VendorPageDescription vendor={vendor} />
             </div>
+          </div>
 
-            <div className="row" style={{ marginTop: "50px" }}>
+          <div
+            className="row"
+            style={{ marginTop: "50px", marginBottom: "20px" }}
+          >
+            <div className="col-12 col-lg-8">
+              {!deals.length && <h1>No deals available</h1>}
               {deals &&
                 deals.map((deal) => (
                   <VendorPageDeal
@@ -73,11 +82,14 @@ const VendorPage = ({ match }) => {
                     deal={deal}
                   />
                 ))}
+            </div>
+            <div className="col-12 col-lg-4">
               <VendorPageOrders cart={cart} />
             </div>
           </div>
         </div>
       </div>
+      {/* </div> */}
     </>
   );
 };

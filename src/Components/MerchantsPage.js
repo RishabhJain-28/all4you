@@ -50,6 +50,7 @@ const DealsPage = ({ match }) => {
               </div>
               <div className="col-sm-8 ">
                 <div className="row">
+                  {/* {!merchants.length && <h1>No merchants available</h1>} */}
                   {merchants.map((merchant) => (
                     // <Link to={`/vendor`} >
                     <VendorCard key={merchant._id} merchant={merchant} />

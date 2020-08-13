@@ -3,13 +3,14 @@ import React, { Fragment } from "react";
 const VendorPageDeal = ({ deal, qty, addToCart, removeFromCart }) => {
   return (
     <Fragment>
-      <div className="col-12 col-lg-7">
+      <div style={{ marginBottom: "10px" }}>
         <div
           className="row"
           style={{
             backgroundColor: "white",
             padding: "10px 5px 10px 5px",
             borderRadius: "10px",
+            border: "1px solid #E0DEDE",
             boxShadow: "-6px -6px 16px #fff, 6px 6px 16px #d1cdc7",
           }}
         >

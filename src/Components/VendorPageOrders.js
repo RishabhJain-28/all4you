@@ -3,8 +3,10 @@ import OrderDealItem from "./OrderDealItem";
 
 const VendorPageOrders = ({ cart }) => {
   const [totalAmount, setTotalAmount] = useState(0);
+  const [cartKeys, setCartKeys] = useState([]);
   useEffect(() => {
     const cartKeys = Object.keys(cart);
+    setCartKeys(cartKeys);
     if (!cartKeys.length) return;
     const amt = cartKeys.reduce(
       (val, key) => val + cart[key].price * cart[key].qty,
@@ -12,9 +14,10 @@ const VendorPageOrders = ({ cart }) => {
     );
     setTotalAmount(amt);
   }, [cart]);
+
   return (
     <>
-      <div className="col-12 col-lg-5">
+      <div>
         <div
           className="card"
           style={{
@@ -27,7 +30,7 @@ const VendorPageOrders = ({ cart }) => {
               <strong>Your Order</strong>
             </h5>
             <div style={{ marginTop: "15px" }}>
-              {Object.keys(cart).map((key) => {
+              {cartKeys.map((key) => {
                 return <OrderDealItem key={key} id={key} item={cart[key]} />;
               })}
             </div>

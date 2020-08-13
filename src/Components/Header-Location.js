@@ -48,7 +48,7 @@ const HeaderLocation = ({
                         placeholder="Enter your city name"
                         type="search"
                         list="locationList"
-                        autoComplete="off"
+                        autoComplete="on"
                       />
                       <datalist id="locationList">
                         {locationsList.map((loc) => (

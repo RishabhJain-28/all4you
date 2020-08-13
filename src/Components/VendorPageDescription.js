@@ -4,11 +4,12 @@ const VendorPageDescription = ({ vendor }) => {
   if (!vendor._id) return null;
   return (
     <Fragment>
-      <div className="col-12 col-lg-5">
+      <div>
         <div
           className="card"
           style={{
-            borderRadius: "10px",
+            // borderRadius: "10px",
+            border: "1px solid #E0DEDE",
             boxShadow: "-6px -6px 16px #fff, 6px 6px 16px #d1cdc7",
           }}
         >
