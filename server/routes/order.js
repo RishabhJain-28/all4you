@@ -171,6 +171,8 @@ router.post("/new", async (req, res) => {
       status: "active",
       purchasedOn: new Date(),
       price: req.body.price,
+      promocode: req.body.promocodeApplied, // <-- This is an optional field
+      discountedPrice: req.body.discountedPrice,
     });
 
     // var customer = await Customer.findById(req.user._id).exec();

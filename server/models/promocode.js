@@ -68,7 +68,7 @@ function validatePromocode(promocode) {
     discountAmount: Joi.number(),
     description: Joi.string(),
     notes: Joi.string(),
-    status: Joi.string().valid(["active", "inactive"]).required(),
+    status: Joi.string().valid("active", "inactive").required(),
   });
 
   return schema.validate(promocode);
