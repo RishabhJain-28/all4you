@@ -8,6 +8,15 @@ const { Promocode, validatePromocode } = require("../models/promocode");
 const { Order } = require("../models/orders");
 
 // * Functions
+const dealExists = async (cart, dealId) => {
+  var index = 0;
+  for (var item of cart) {
+    index++;
+    if (item.deal.trim() === dealId.valueOf().toString())
+      return { bool: true, index };
+  }
+  return { bool: false, index: null };
+};
 
 // * Middleware
 
@@ -106,22 +115,29 @@ router.delete("/delete/:id", async (req, res) => {
 });
 
 // * Apply promocode
-// TODO
+// * Done
 router.post("/apply", async (req, res) => {
   /*
-    req.body => [
-      {deal: _id, merchant: _id, price: number},
-      {deal: _id, merchant: _id, price: number}, 
-      {deal: _id, merchant: _id, price: number}...,
-      totalPrice: Number
+    req.body => 
+    cart: [
+      { 
+        deal: _id, 
+        merchant: _id, 
+        customer: _id,
+        price: number, 
+        promocode: String, 
+        discountedPrice: Number
+      }
     ]
+    totalPrice: Number,
+    code: String
   */
 
   try {
     var promocode = await Promocode.findOne({
       code: req.body.code.trim(),
-      validFrom: { $gte: new Date() },
-      validTill: { $lte: new Date() },
+      validFrom: { $lte: new Date() },
+      validTill: { $gte: new Date() },
     });
 
     if (!promocode) return res.send("Promocode is invalid or has expired.");
@@ -137,24 +153,53 @@ router.post("/apply", async (req, res) => {
       (promocode.isUserSpecific === true &&
         promocode.forUsers.includes(req.body.customer) === true)
     ) {
-      /*
-      check if promocode is valid on deal
-      
-        If promocode is NOT deal specific
-          If totalPrice is in min and max bounds
-            Apply discount on cart
-          else 
-            If totalPrice < minPrice
-              Cart value is less than the required value
-            If totalPrice > maxPrice
-              Cart value exceeds the permited value of promocode 
+      if (promocode.isDealSpecific === false) {
+        if (
+          Number(req.body.totalPrice) >= promocode.minAmount &&
+          Number(req.body.totalPrice) <= promocode.maxAmount
+        ) {
+          for (var item of req.body.cart) {
+            var promocodeDiscount =
+              Number(item.price) * (Number(promocode.discount) / 100);
+            item.promocode = promocode.code.trim();
+            item.discountedPrice = item.price - promocodeDiscount;
+          }
+          return res.json({
+            message: "Promocode applied successfully.",
+            object: req.body,
+          });
+        } else {
+          if (Number(req.body.totalPrice) > Number(promocode.maxAmount)) {
+            return res.send(
+              "Cart value exceeds the permited value of promocode"
+            );
+          } else if (
+            Number(req.body.totalPrice) < Number(promocode.minAmount)
+          ) {
+            return res.send(
+              "Cart value is less than the permited value for promocode."
+            );
+          }
+        }
+      }
 
-        If promocode is deal specific and deal is not in cart
-          Invalid promocode
-          
-        If promocode is deal specific and deal is in the cart
-          Apply discount on that deal
-      */
+      if (promocode.isDealSpecific === true) {
+        var ifDealExists = await dealExists(req.body.cart, promocode.forDeal);
+        if (ifDealExists.bool === false) {
+          return res.send("Promocode is invalid.");
+        } else if (ifDealExists.bool === true) {
+          req.body.cart[ifDealExists.index].promocode = promocode.code;
+          req.body.cart[ifDealExists.index].discountedPrice =
+            req.body.cart[ifDealExists.index].price -
+            (req.body.cart[ifDealExists.index].price * promocode.discount) /
+              100;
+
+          return res.json({
+            message: "Promocode applied successfully.",
+            object: req.body,
+          });
+        }
+      }
     }
   } catch (error) {
     console.log(error);
@@ -163,7 +208,21 @@ router.post("/apply", async (req, res) => {
 });
 
 // * Remove promocode
-// TODO
-router.post("/remove", async (req, res) => {});
+// * Done
+router.post("/remove", async (req, res) => {
+  try {
+    for (var item of req.body.cart) {
+      item.promocode = null;
+      item.discountedPrice = item.price;
+    }
+
+    res.json({ message: "Promocode applied successfully.", object: req.body });
+  } catch (error) {
+    console.log(error);
+    res.send("Something went wrong.");
+  }
+});
 
 // * Requests End -->
+
+module.exports = router;
