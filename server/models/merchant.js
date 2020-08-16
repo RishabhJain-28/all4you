@@ -83,10 +83,10 @@ function validateMerchant(merchant) {
     phoneNo: Joi.string().max(10).min(10).required(),
     password: Joi.string().required(),
     confirmPassword: Joi.string().required(),
-    status: Joi.string().valid(["active", "inactive"]).required(),
+    status: Joi.string().valid("active", "inactive").required(),
     businessInfo: Joi.object()
       .keys({
-        businessType: Joi.string().required(),
+        businessType: Joi.string().valid("single", "multi").required(),
         title: Joi.string().required(),
         logo: Joi.string(),
         description: Joi.string(),
@@ -117,7 +117,8 @@ function validateMerchant(merchant) {
         .required(),
     }),
     images: Joi.array(),
-    categories: Joi.array(),
+    // categories: Joi.array().required(),
+    // subcategories: Joi.array().required(),
   });
 
   return schema.validate(merchant);
