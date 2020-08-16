@@ -76,8 +76,9 @@ router.get("/view/:id", async (req, res) => {
 // * Done
 router.post("/new", async (req, res) => {
   try {
-    // const { error } = validateMerchant(req.body);
-    // if (error) return res.send(error.details[0].message);
+    console.log(req.body);
+    const { error } = validateMerchant(req.body);
+    if (error) return res.send(error.details[0].message);
 
     if (req.body.password.trim() !== req.body.confirmPassword.trim())
       return res.send("Passwords do not match.");
@@ -85,11 +86,17 @@ router.post("/new", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     var password = await bcrypt.hash(req.body.password.trim(), salt);
 
-    var reqBody = _.omit(req.body, ["password", "confirmPassword", "phoneNo"]);
+    var reqBody = _.omit(req.body, [
+      "password",
+      "confirmPassword",
+      "phoneNo",
+      "altNumber",
+    ]);
 
     var newMerchant = {
       ...reqBody,
       phoneNo: Number(req.body.phoneNo),
+      altNumber: Number(req.body.altNumber),
       password: password,
       createdOn: moment().format("D/M/YYYY, h:m A"),
       createdOrg: new Date(),
@@ -98,10 +105,10 @@ router.post("/new", async (req, res) => {
 
     const merchant = await Merchant.create(newMerchant);
 
-    res.send(merchant);
+    res.status(200).send(merchant);
   } catch (error) {
     console.log(error);
-    res.send("Something went wrong.");
+    res.status(400).send("Something went wrong.");
   }
 });
 
