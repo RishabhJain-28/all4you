@@ -26,11 +26,11 @@ const VendorPage = ({ match }) => {
     let { qty } = cart[id];
 
     qty--;
-
+    if (qty < 0) qty = 0;
     const newCart = { ...cart };
     newCart[id].qty = qty;
 
-    if (qty === 0) {
+    if (qty <= 0) {
       delete cart[id];
     }
 

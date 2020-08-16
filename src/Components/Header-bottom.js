@@ -35,7 +35,7 @@ const HeaderBottom = () => {
               />
               <datalist id="serchListData">
                 {datalist.map((item) => (
-                  <option value={item.val} key={item._id} />
+                  <option value={item.val} key={item.id} />
                 ))}
               </datalist>
               <span className="input-group-btn">

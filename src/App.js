@@ -6,6 +6,7 @@ import Homepage from "./Components/Homepage";
 import VendorPage from "./Components/VendorPage";
 import UserPage from "./Components/UserPage";
 import Adminpage from "./Components/Admin/Adminpage";
+import Admin from "./Components/Admin/Admin";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import MerchantsPage from "./Components/MerchantsPage";
@@ -14,7 +15,7 @@ function App() {
   return (
     <>
       <Switch>
-        <Route exact path="/admin" component={Adminpage} />
+        <Route exact path="/admin" component={Admin} />
         <Route
           path="/"
           render={(props) => (
