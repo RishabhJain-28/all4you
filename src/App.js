@@ -9,6 +9,7 @@ import Adminpage from "./Components/Admin/Adminpage";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
 import MerchantsPage from "./Components/MerchantsPage";
+import CreateMerchant from "./Components/Admin/Merchant/CreateMerchant";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
           path="/"
           render={(props) => (
             <>
-              <Header {...props} />
+              {/* <Header {...props} /> */}
               <Switch>
                 <Route
                   exact
@@ -35,8 +36,14 @@ function App() {
                 />
                 <Route path="/user" component={UserPage} {...props} />
                 <Route exact path="/" component={Homepage} {...props} />
+                <Route
+                  exact
+                  path="/backend/merchant/new"
+                  component={CreateMerchant}
+                  {...props}
+                />
               </Switch>
-              <Footer />
+              {/* <Footer /> */}
             </>
           )}
         />
