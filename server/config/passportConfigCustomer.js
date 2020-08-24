@@ -9,6 +9,7 @@ module.exports = function (passport) {
     "customer",
     new LocalStrategy(async (loginDetails, password, done) => {
       console.log(loginDetails);
+      console.log(password);
 
       // Find a Customer
       let foundCustomer;
@@ -27,7 +28,10 @@ module.exports = function (passport) {
         return done(null, false, { message: "Invalid Credentials" });
       }
 
-      if (foundCustomer.status.toLowerCase() === "inactive")
+      if (
+        foundCustomer.status &&
+        foundCustomer.status.toLowerCase() === "inactive"
+      )
         return done(null, false, {
           message: "Your access has been restricted. Contact Admin.",
         });
@@ -35,6 +39,7 @@ module.exports = function (passport) {
       // Match Password
       bcrypt.compare(password, foundCustomer.password, (err, isMatch) => {
         if (isMatch) {
+          console.log("logged in");
           return done(null, foundCustomer);
         } else {
           return done(null, false, { message: "Incorrect Credentials" });
@@ -47,8 +52,8 @@ module.exports = function (passport) {
     done(null, foundCustomer.id);
   });
 
-  passport.deserializeUser(function (id, done) {
-    Customer.findById(id, function (err, foundCustomer) {
+  passport.deserializeUser(async function (id, done) {
+    req.user = await Customer.findById(id, function (err, foundCustomer) {
       done(err, foundCustomer);
     });
   });

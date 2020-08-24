@@ -93,7 +93,7 @@ const Dashboard = () => {
       <div className="row" style={{ marginTop: "10px" }}></div>
       <div className="row">
         <div
-          className="col-md-6 col-sm-6 "
+          class="col-md-6 col-sm-6 "
           style={{
             border: "1px solid #e7ecf1",
             boxShadow: " 0 2px 3px 2px rgba(0,0,0,.03)",
@@ -108,8 +108,8 @@ const Dashboard = () => {
           <div className="overflow-auto" style={{ height: "150px" }}>
             <ul>
               <li>
-                <div className="recent-item">
-                  <i className="fa fa-shopping-cart"></i>
+                <div class="recent-item">
+                  <i class="fa fa-shopping-cart"></i>
                   <p className="recent-items-details">
                     User
                     <a> prashant mehta</a>

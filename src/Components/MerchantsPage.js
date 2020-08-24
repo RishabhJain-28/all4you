@@ -45,7 +45,7 @@ const DealsPage = ({ match }) => {
             <div className="row" style={{ marginTop: "15px" }}>
               <div className="col-sm-4 ">
                 {/* <div className="left-side"> */}
-                <Filters />
+                <Filters cat={match.params.cat} />
                 {/* </div> */}
               </div>
               <div className="col-sm-8 ">
@@ -53,7 +53,11 @@ const DealsPage = ({ match }) => {
                   {/* {!merchants.length && <h1>No merchants available</h1>} */}
                   {merchants.map((merchant) => (
                     // <Link to={`/vendor`} >
-                    <VendorCard key={merchant._id} merchant={merchant} />
+                    <VendorCard
+                      key={merchant._id}
+                      merchant={merchant}
+                      cat={match.params.cat}
+                    />
                     // </Link>
                   ))}
                   {/* <VendorCard />

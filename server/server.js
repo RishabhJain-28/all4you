@@ -65,7 +65,7 @@ app.use("/api/admin", admin);
 app.use("/api/location", location);
 app.use("/api/category", category);
 app.use("/api/enquiry", enquiry);
-// app.use("/api/subcategory", subcategory);
+app.use("/api/subcategory", subcategory);
 app.use("/api/deal", deals);
 app.use("/api/orders", order);
 app.use("/api/promocode", promocode);

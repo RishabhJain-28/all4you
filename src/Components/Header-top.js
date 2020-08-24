@@ -49,10 +49,10 @@ const HeaderTop = ({ setShowChangeLocation, location }) => {
           <li>
             {/* <a className="" href="#"> */}
             {/* <LoginModal /> */}
+            {/* </a> */}
 
             <UserHeaderMenu />
             {/* signup */}
-            {/* </a> */}
           </li>
         </ul>
       </div>

@@ -38,6 +38,10 @@ router.post("/sendOTP", async (req, res) => {
     res.send("Something went wrong.");
   }
 });
+router.get("/", async (req, res) => {
+  const users = await Customer.find();
+  res.send(users);
+});
 
 // * Register Customer
 router.post("/signup", async (req, res) => {
@@ -58,12 +62,12 @@ router.post("/signup", async (req, res) => {
       return res.send("Age must be 18 years or older.about-content");
 
     // validate otp
-    const result = await validateOtp(
-      Number(req.body.phoneNo),
-      req.body.otp.trim()
-    );
+    // const result = await validateOtp(
+    //   Number(req.body.phoneNo),
+    //   req.body.otp.trim()
+    // );
 
-    if (!result) return res.send("Invalid OTP.");
+    // if (!result) return res.send("Invalid OTP.");
 
     // validate invite code
     // var inviteResult = await validateInviteCode(
@@ -107,7 +111,8 @@ router.post("/signup", async (req, res) => {
 // * Login Customer
 router.post("/login", (req, res, next) => {
   passport.authenticate("customer", {
-    successRedirect: "/",
+    successRedirect: "/api/customer/my-account",
+
     failureRedirect: "/api/login",
   })(req, res, next);
 });
@@ -115,6 +120,8 @@ router.post("/login", (req, res, next) => {
 // * Get my profile
 router.get("/my-account", async (req, res) => {
   try {
+    console.log(req.isAuthenticated());
+    console.log(req.user);
     const customer = await Customer.findById(req.user._id).exec();
     if (!customer) return res.send("Customer does not exist.");
 

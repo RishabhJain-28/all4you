@@ -5,11 +5,10 @@ const SignupForm = () => {
   const [name, setName] = useState("abc");
   const [DOB, setDOB] = useState("");
   const [gender, setGender] = useState("male");
-  const [email, setEmail] = useState("sasukeuchiha3396@gmail.com");
-  const [phoneNumber, setPhoneNumber] = useState(1234567891);
+  const [email, setEmail] = useState("asdf@gmail.com");
+  const [phoneNumber, setPhoneNumber] = useState("1234567891");
   const [password, setPassword] = useState("");
   const [inviteCode, setInviteCode] = useState("");
-  const [referCode, setReferCode] = useState("");
   const signup = async (e) => {
     e.preventDefault();
     const res = await axios.post("http://localhost:3124/api/customer/signup", {
@@ -20,7 +19,7 @@ const SignupForm = () => {
       password,
       confirmPassword: password,
       inviteCode,
-      referCode,
+      gender,
       DOB,
     });
     console.log(res);
@@ -77,21 +76,21 @@ const SignupForm = () => {
         />
       </Form.Group>
       <Form.Group controlId="formBasicPassword">
+        <Form.Label>Gender</Form.Label>
+        <Form.Control
+          value={gender}
+          onChange={(e) => setGender(e.target.value)}
+          type="text"
+          placeholder="Gender"
+        />
+      </Form.Group>
+      <Form.Group controlId="formInvite">
         <Form.Label>Invite Code</Form.Label>
         <Form.Control
           value={inviteCode}
           onChange={(e) => setInviteCode(e.target.value)}
           type="text"
           placeholder="invite"
-        />
-      </Form.Group>
-      <Form.Group controlId="formBasicPassword">
-        <Form.Label>Refer Code</Form.Label>
-        <Form.Control
-          value={referCode}
-          onChange={(e) => setReferCode(e.target.value)}
-          type="text"
-          placeholder="refer "
         />
       </Form.Group>
 

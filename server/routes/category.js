@@ -31,7 +31,18 @@ router.get("/all", async (req, res) => {
     res.status(400).send("Something went wrong.");
   }
 });
-
+router.get("/sub/:id", async (req, res) => {
+  try {
+    const subcategories = await Subcategory.findOne({
+      parentCategory: req.params.id,
+    });
+    console.log(subcategories);
+    res.json(subcategories);
+  } catch (error) {
+    console.log("Error occured here \n", error);
+    res.status(400).send("Something went wrong.");
+  }
+});
 // * Get a single category
 // * Done
 router.get("/:id", async (req, res) => {

@@ -51,8 +51,8 @@ function validateCustomer(customer) {
     DOB: Joi.string().required(),
     password: Joi.string().required(),
     confirmPassword: Joi.string().required(),
-    otp: Joi.string().min(6).max(6).required(),
-    // inviteCode: Joi.string().required(),
+    // otp: Joi.string().min(6).max(6).required(),
+    inviteCode: Joi.string().required(),
   });
 
   return schema.validate(customer);

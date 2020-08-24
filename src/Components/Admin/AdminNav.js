@@ -1,14 +1,22 @@
 import React from "react";
 import { Nav } from "react-bootstrap";
 
-const AdminNav = () => {
+const AdminNav = ({ location }) => {
+  const abc = () => {
+    const { pathname } = location;
+    const split = pathname.split("/");
+    let l = split.length - 1;
+    if (split[l] === "") l--;
+    console.log(split[l]);
+    return split[l];
+  };
   return (
     <>
       <Nav
         style={{ border: "0" }}
         navbar={true}
         variant="tabs"
-        defaultActiveKey="/dashboard"
+        defaultActiveKey={() => abc()}
       >
         <Nav.Item
           style={{
@@ -17,8 +25,9 @@ const AdminNav = () => {
           }}
         >
           <Nav.Link
+            href="/admin"
             style={{ color: "#636e77", borderRadius: "0px" }}
-            eventKey="/dashboard"
+            eventKey="admin"
           >
             <i className="fa fa-home"></i> DASHBOARD
           </Nav.Link>
@@ -31,7 +40,7 @@ const AdminNav = () => {
         >
           <Nav.Link
             style={{ color: "#636e77", borderRadius: "0px" }}
-            eventKey="link-2"
+            eventKey="user"
           >
             <i className="fa fa-users"></i> USERS
           </Nav.Link>
@@ -43,10 +52,11 @@ const AdminNav = () => {
           }}
         >
           <Nav.Link
+            href="/admin/merchant"
             style={{ color: "#636e77", borderRadius: "0px" }}
-            eventKey="link-3"
+            eventKey="merchant"
           >
-            Option 2
+            Merchant
           </Nav.Link>
         </Nav.Item>
       </Nav>

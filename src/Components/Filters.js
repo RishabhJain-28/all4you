@@ -2,7 +2,7 @@ import React from "react";
 import FilterLocationItem from "./FilterLocationItem";
 import FilterSubcategoryItem from "./FilterSubcategoryItem";
 
-const Filters = () => {
+const Filters = ({ cat }) => {
   return (
     <div
       className=""
@@ -19,7 +19,7 @@ const Filters = () => {
       <div className="dropdown-divider"></div>
       <div>
         <h6>
-          <strong>Current Category</strong>
+          <strong>{cat}</strong>
         </h6>
         <ul className="list-group">
           <FilterSubcategoryItem />

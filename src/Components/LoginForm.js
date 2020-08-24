@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 const LoginForm = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("asdf@gmail.com");
+  const [password, setPassword] = useState("asdf12345");
   const login = async (e) => {
     e.preventDefault();
     console.log("aaaa");
     const res = await axios.post("http://localhost:3124/api/customer/login", {
-      loginDetails: username,
+      username,
       password,
     });
     console.log(res);
+    const a = await axios.get(`http://localhost:3124/api/customer/my-account`);
+    console.log("bbbb", a);
   };
   return (
     <Form onSubmit={login}>

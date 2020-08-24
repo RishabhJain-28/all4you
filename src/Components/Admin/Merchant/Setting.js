@@ -14,11 +14,7 @@ const Setting = ({
     console.log(formData);
     try {
       axios
-        .post("http://localhost:3124/api/merchant/new", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
+        .post("http://localhost:3124/api/merchant/new", formData)
         .then((res) => {
           console.log(res.data);
         });

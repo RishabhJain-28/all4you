@@ -10,6 +10,7 @@ const OrderDealItem = ({ item, id }) => {
             <h6 className="text-muted">
               <strong>{item.name}</strong>
             </h6>
+            <h7 className="text-muted">{item.time}</h7>
           </div>
           <div className="p-2">
             <h6 className="text-muted">

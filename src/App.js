@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { Switch, Route } from "react-router-dom";
 import "./style.css";
 
 import Homepage from "./Components/Homepage";
 import VendorPage from "./Components/VendorPage";
 import UserPage from "./Components/UserPage";
-import Adminpage from "./Components/Admin/Adminpage";
 import Admin from "./Components/Admin/Admin";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
@@ -16,22 +15,22 @@ function App() {
   return (
     <>
       <Switch>
-        <Route exact path="/admin" component={Admin} />
+        <Route path="/admin" component={Admin} />
         <Route
           path="/"
           render={(props) => (
             <>
-              {/* <Header {...props} /> */}
+              <Header {...props} />
               <Switch>
                 <Route
                   exact
-                  path="/merchants/:id"
+                  path="/merchants/:cat/:id"
                   component={MerchantsPage}
                   {...props}
                 />
                 <Route
                   exact
-                  path="/vendor/:id"
+                  path="/vendor/:cat/:id"
                   component={VendorPage}
                   {...props}
                 />
@@ -44,7 +43,7 @@ function App() {
                   {...props}
                 />
               </Switch>
-              {/* <Footer /> */}
+              <Footer />
             </>
           )}
         />

@@ -73,10 +73,10 @@ const UserInfo = ({
   return (
     <Fragment>
       <div className="form-group">
-        <label for="businessName">Business Name</label>
+        <label htmlFor="businessName">Business Name</label>
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           name="businessName"
           placeholder="Enter Business Name"
           onChange={onChange}
@@ -86,10 +86,10 @@ const UserInfo = ({
       </div>
 
       <div className="form-group">
-        <label for="phoneNo">Phone Number</label>
+        <label htmlFor="phoneNo">Phone Number</label>
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           name="phoneNo"
           placeholder="Enter 10-digit contact number"
           onChange={onChange}
@@ -99,10 +99,10 @@ const UserInfo = ({
       </div>
 
       <div className="form-group">
-        <label for="email">Email Id</label>
+        <label htmlFor="email">Email Id</label>
         <input
           type="email"
-          class="form-control"
+          className="form-control"
           name="email"
           placeholder="Enter Email Id"
           onChange={onChange}
@@ -112,10 +112,10 @@ const UserInfo = ({
       </div>
 
       <div className="form-group">
-        <label for="password">Password</label>
+        <label htmlFor="password">Password</label>
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           name="password"
           placeholder="Enter a secure password"
           onChange={onChange}
@@ -125,10 +125,10 @@ const UserInfo = ({
       </div>
 
       <div className="form-group">
-        <label for="confirmPassword">Confirm Password</label>
+        <label htmlFor="confirmPassword">Confirm Password</label>
         <input
           type="text"
-          class="form-control"
+          className="form-control"
           name="confirmPassword"
           placeholder="Enter a secure password"
           onChange={onChange}

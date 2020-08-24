@@ -11,36 +11,36 @@ const CreateMerchant = () => {
   const [step, setStep] = useState(1);
 
   const [userState, setUserState] = useState({
-    businessName: "",
-    phoneNo: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    businessName: "abc",
+    phoneNo: "99876544321",
+    email: "abc@gmail.com",
+    password: "abc12345",
+    confirmPassword: "abc12345",
   });
 
   const [businessState, setBusinessState] = useState({
     businessType: "Select",
-    title: "",
+    title: "abcv",
     logo: "",
-    description: "",
+    description: "zzx",
   });
 
   const [contactState, setContactState] = useState({
-    firstName: "",
-    lastName: "",
-    altNumber: "",
-    communicationEmail: "",
-    about: "",
+    firstName: "zx",
+    lastName: "xz",
+    altNumber: "9897654321",
+    communicationEmail: "ccc@gmail.com",
+    about: "sdsad",
   });
 
   const [locationState, setLocationState] = useState({
     state: "Select",
     city: "Select",
     area: "Select",
-    addrLine1: "",
-    addrLine2: "",
-    landmark: "",
-    zipcode: "",
+    addrLine1: "adr1",
+    addrLine2: "ad42",
+    landmark: "landmark1",
+    zipcode: "111222",
   });
 
   const [images, setImages] = useState([]);

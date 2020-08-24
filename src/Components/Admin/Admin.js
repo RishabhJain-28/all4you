@@ -1,12 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
+import { Switch, Route, Link } from "react-router-dom";
 import AdminNav from "./AdminNav";
 import Dashboard from "./Dashboard";
+import CreateMerchant from "./Merchant/CreateMerchant";
 
 // import '../../components-md.min.css'
 import { Nav } from "react-bootstrap";
-const Admin = () => {
+const Admin = ({ location }) => {
   return (
     <>
       <div
@@ -14,10 +14,10 @@ const Admin = () => {
         style={{ background: "#2f373e", minHeight: "800px" }}
       >
         <div className="row">
-          <h1>dsd</h1>
+          <h1>Button and admin menu</h1>
         </div>
         <div className="row-fluid">
-          <AdminNav />
+          <AdminNav location={location} />
           <div
             className="container-fluid"
             style={{
@@ -27,7 +27,10 @@ const Admin = () => {
               marginLeft: "2px",
             }}
           >
-            <Dashboard />
+            <Switch>
+              <Route exact path="/admin" component={Dashboard} />
+              <Route exact path="/admin/merchant" component={CreateMerchant} />
+            </Switch>
           </div>
           <div style={{ color: "#bbb", fontSize: "14px" }}>
             <p>

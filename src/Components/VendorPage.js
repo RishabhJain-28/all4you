@@ -10,7 +10,7 @@ const VendorPage = ({ match }) => {
   const [vendor, setVendor] = useState({});
   const [cart, setCart] = useState({});
 
-  const addToCart = (id, name, price) => {
+  const addToCart = (id, name, price, time) => {
     const qty = (cart[id] ? cart[id].qty : 0) + 1;
     const newCart = { ...cart };
 
@@ -18,6 +18,7 @@ const VendorPage = ({ match }) => {
       name,
       qty,
       price,
+      time,
     };
     setCart(newCart);
   };
@@ -75,11 +76,12 @@ const VendorPage = ({ match }) => {
               {deals &&
                 deals.map((deal) => (
                   <VendorPageDeal
-                    qty={(cart[deal._id] && cart[deal._id].qty) || 0}
+                    qty={(cart[deal._id ] && cart[deal._id].qty) || 0}
                     addToCart={addToCart}
                     removeFromCart={removeFromCart}
                     key={deal._id}
                     deal={deal}
+                    type={match.params.cat}
                   />
                 ))}
             </div>
